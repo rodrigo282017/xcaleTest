@@ -12,5 +12,4 @@ import java.util.UUID;
 public class ProductWithQuantityDTO {
     private UUID productId;
     private int quantity;
-
 }

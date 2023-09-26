@@ -18,6 +18,7 @@ public class UpdateCartDTO {
     private List<ProductAndQuantity> productQuantity;
 
     @Data
+    @Builder
     public static class ProductAndQuantity {
         private UUID productId;
         private int quantity;
