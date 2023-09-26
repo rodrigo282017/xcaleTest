@@ -20,7 +20,7 @@ public class CartMapper implements Mapper<CartDTO, Cart> {
 
     @Override
     public List<CartDTO> toDTOs(List<Cart> carts) {
-        return null;
+        return carts.stream().map(this::toDto).toList();
     }
 
     @Override

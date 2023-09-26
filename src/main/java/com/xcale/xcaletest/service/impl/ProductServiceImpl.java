@@ -17,6 +17,10 @@ import java.util.UUID;
 
 import static org.springframework.util.StringUtils.hasText;
 
+/**
+ * Implementation of the product service.
+ * This service provides methods to create, update, retrieve, and delete products, as well as retrieve all products.
+ */
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements IProductService {

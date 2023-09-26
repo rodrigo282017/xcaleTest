@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * Controller advice to handle global exceptions and provide consistent error responses.
  * This controller advice intercepts specific exceptions and maps them to appropriate HTTP error responses,
  * enhancing the API's error handling and consistency.
- *
+ * <p>
  * Exception Handling:
  * - {@link ValidationException}: Handles validation-related errors and returns a Bad Request (400) response.
  * - {@link EntityNotFoundException}: Handles entity not found errors and returns a Not Found (404) response.

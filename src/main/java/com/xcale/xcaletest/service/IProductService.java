@@ -1,7 +1,6 @@
 package com.xcale.xcaletest.service;
 
 import com.xcale.xcaletest.model.api.ProductDTO;
-import com.xcale.xcaletest.model.entity.CartProduct;
 
 import java.util.List;
 
