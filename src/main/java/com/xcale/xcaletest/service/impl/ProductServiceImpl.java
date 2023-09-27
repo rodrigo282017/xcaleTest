@@ -8,6 +8,7 @@ import com.xcale.xcaletest.model.entity.Product;
 import com.xcale.xcaletest.repository.ProductRepository;
 import com.xcale.xcaletest.service.IProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ import static org.springframework.util.StringUtils.hasText;
  * Implementation of the product service.
  * This service provides methods to create, update, retrieve, and delete products, as well as retrieve all products.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements IProductService {
@@ -29,6 +31,7 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public List<ProductDTO> getAllProducts() {
         List<Product> productList = productRepository.findAll();
+        log.info("Retrieved all products successfully");
 
         return new ProductMapper().toDTOs(productList);
     }
@@ -37,6 +40,7 @@ public class ProductServiceImpl implements IProductService {
     public ProductDTO getProductById(String id) {
         Product product = productRepository.findById(UUID.fromString(id))
                 .orElseThrow(() -> new EntityNotFoundException("Product not found", "Could not find product.", id));
+        log.info("Get product by id successfully for id: {}", id);
 
         return new ProductMapper().toDto(product);
     }
@@ -48,6 +52,7 @@ public class ProductServiceImpl implements IProductService {
 
         Product product = productRepository.save(new ProductMapper().toEntity(productDTO));
         productDTO.setId(product.getId());
+        log.info("Created product successfully for product id: {}", productDTO.getId());
 
         return productDTO;
     }
@@ -72,6 +77,7 @@ public class ProductServiceImpl implements IProductService {
         }
 
         productRepository.save(product);
+        log.info("Updated product successfully for product id: {}", productDTO.getId());
 
         return new ProductMapper().toDto(product);
     }
@@ -80,10 +86,13 @@ public class ProductServiceImpl implements IProductService {
     @Transactional
     public void deleteProduct(String id) {
         productRepository.deleteById(UUID.fromString(id));
+        log.info("Deleted product successfully for product id: {}", id);
+
     }
 
     private void validateRequest(ProductDTO productDTO) {
         if (!hasText(productDTO.getDescription()) || productDTO.getAmount() == null) {
+            log.info("Missing required parameters for product id: {}", productDTO.getId());
             throw new ValidationException(
                     "MissingRequiredParameters",
                     "Description and amount are required",

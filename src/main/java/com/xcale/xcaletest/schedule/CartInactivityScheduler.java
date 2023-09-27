@@ -24,7 +24,7 @@ public class CartInactivityScheduler {
      * This task runs at a fixed rate and deletes carts that have been inactive for a specified duration.
      * Inactivity is determined based on the timestamp recorded in the cart.
      */
-    @Scheduled(fixedRate = 60000) // This will be called each 10 minutes... It is not exactly but it is approximate
+    @Scheduled(fixedRate = 600000) // This will be called each 10 minutes... It is not exactly but it is approximate
     public void deleteInactiveCarts() {
         Instant time = Instant.now().minus(10, ChronoUnit.MINUTES);
         List<CartDTO> inactiveCarts = cartService.findInactiveCarts(time);

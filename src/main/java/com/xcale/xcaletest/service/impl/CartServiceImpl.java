@@ -14,6 +14,7 @@ import com.xcale.xcaletest.service.ICartProductService;
 import com.xcale.xcaletest.service.ICartService;
 import com.xcale.xcaletest.service.IProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ import java.util.UUID;
  * Implementation of the cart service.
  * This service provides methods to create, update, retrieve, and delete carts, as well as find inactive carts.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CartServiceImpl implements ICartService {
@@ -55,6 +57,7 @@ public class CartServiceImpl implements ICartService {
 
             //We need to associate the cart and the product
             cartProductService.createCartProduct(cartDTO, productDTO, productWithQuantity.getQuantity());
+            log.info("Cart created successfully for productId: {} and cartId: {}", productDTO.getId(), cartDTO.getId());
         }
 
         cartDTO.setProducts(productDTOList);
@@ -67,6 +70,7 @@ public class CartServiceImpl implements ICartService {
     public void deleteCart(String id) {
         //This method is going to delete the cart repository entity and the associated cartProduct
         cartRepository.deleteById(UUID.fromString(id));
+        log.info("Cart deleted successfully for id: {}", id);
     }
 
     @Override
@@ -85,7 +89,7 @@ public class CartServiceImpl implements ICartService {
 
             ProductDTO productDTO = productService.getProductById(productId.toString());
             cartProductService.createCartProduct(new CartMapper().toDto(cart), productDTO, quantity);
-
+            log.info("Cart updated successfully for id: {} and product id: {}", id, productDTO.getId());
         }
 
         cart = cartRepository.save(cart);
@@ -101,6 +105,7 @@ public class CartServiceImpl implements ICartService {
         Cart cart = cartRepository.findById(UUID.fromString(id))
                 .orElseThrow(() -> new EntityNotFoundException("Cart not found", "Could not find cart.", id));
 
+        log.info("Cart get successfully for id: {}", id);
         return new CartMapper().toDto(cart);
     }
 
@@ -109,15 +114,19 @@ public class CartServiceImpl implements ICartService {
     public List<CartDTO> findInactiveCarts(Instant time) {
         List<Cart> cartList = cartRepository.findByUpdatedAtBefore(time);
 
+        log.info("Retrieving inactive carts successfully for cart list : {}",
+                cartList.stream().map(Cart::getId).toList());
         return new CartMapper().toDTOs(cartList);
     }
 
     private void validateRequest(List<ProductWithQuantityDTO> productWithQuantityDTOS) {
-        if (productWithQuantityDTOS.isEmpty())
+        if (productWithQuantityDTOS.isEmpty()) {
+            log.error("Products are needed to create a cart"); //TODO Add trace id to register the requests
             throw new ValidationException(
                     "MissingRequiredParameters",
                     "Products are needed to create a cart",
                     productWithQuantityDTOS
             );
+        }
     }
 }
