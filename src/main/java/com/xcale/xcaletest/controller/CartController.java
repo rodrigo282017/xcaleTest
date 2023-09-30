@@ -35,7 +35,7 @@ public class CartController {
     private final ICartService cartService;
 
     @PostMapping
-    public ResponseEntity<CartDTO> createCart(@RequestBody List<ProductWithQuantityDTO> productWithQuantityDTOS) {
+    public ResponseEntity<CartDTO> createCart(@RequestBody final List<ProductWithQuantityDTO> productWithQuantityDTOS) {
         log.info("Received request to create a cart.");
         CartDTO createdCart = cartService.createCart(productWithQuantityDTOS);
 
@@ -43,7 +43,7 @@ public class CartController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCart(@PathVariable String id) {
+    public ResponseEntity<Void> deleteCart(@PathVariable final String id) {
         log.info("Received request to delete a cart.");
         cartService.deleteCart(id);
 
@@ -51,7 +51,8 @@ public class CartController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<CartDTO> addCartProducts(@PathVariable String id, @RequestBody UpdateCartDTO updateCartDTO) {
+    public ResponseEntity<CartDTO> addCartProducts(@PathVariable final String id,
+                                                   @RequestBody final UpdateCartDTO updateCartDTO) {
         log.info("Received request to add products to a cart.");
         CartDTO updatedProduct = cartService.updateCart(id, updateCartDTO);
 
@@ -59,7 +60,7 @@ public class CartController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CartDTO> getCartById(@PathVariable String id) {
+    public ResponseEntity<CartDTO> getCartById(@PathVariable final String id) {
         log.info("Received request to add products to a cart.");
 
         return ResponseEntity.ok(cartService.getCartById(id));

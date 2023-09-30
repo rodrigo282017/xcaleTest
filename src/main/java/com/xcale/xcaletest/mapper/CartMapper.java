@@ -11,7 +11,7 @@ import java.util.List;
 public class CartMapper implements Mapper<CartDTO, Cart> {
 
     @Override
-    public CartDTO toDto(Cart cart) {
+    public CartDTO toDto(final Cart cart) {
         return CartDTO.builder()
                 .id(cart.getId())
                 .products(cart.getProducts() != null ? new ProductMapper().toDTOs(cart.getProducts()) : null)
@@ -19,17 +19,17 @@ public class CartMapper implements Mapper<CartDTO, Cart> {
     }
 
     @Override
-    public List<CartDTO> toDTOs(List<Cart> carts) {
+    public List<CartDTO> toDTOs(final List<Cart> carts) {
         return carts.stream().map(this::toDto).toList();
     }
 
     @Override
-    public List<Cart> toEntities(List<CartDTO> dTOs) {
+    public List<Cart> toEntities(final List<CartDTO> dTOs) {
         return null;
     }
 
     @Override
-    public Cart toEntity(CartDTO cartDTO) {
+    public Cart toEntity(final CartDTO cartDTO) {
         return Cart.builder()
                 .id(cartDTO.getId())
                 .products(cartDTO.getProducts() != null ? new ProductMapper().toEntities(cartDTO.getProducts()) : null)

@@ -156,8 +156,7 @@ public class CartServiceImplTest {
                         .build();
 
         UpdateCartDTO updateCartDTO = UpdateCartDTO.builder()
-                .productQuantity
-                        (List.of(UpdateCartDTO.ProductAndQuantity
+                .productQuantity(List.of(UpdateCartDTO.ProductAndQuantity
                                 .builder()
                                 .productId(productId)
                                 .quantity(2)

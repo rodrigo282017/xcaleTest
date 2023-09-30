@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CartProductMapper implements Mapper<CartProductDTO, CartProduct> {
     @Override
-    public CartProductDTO toDto(CartProduct cartProduct) {
+    public CartProductDTO toDto(final CartProduct cartProduct) {
         return CartProductDTO.builder()
                 .cartDTO(new CartMapper().toDto(cartProduct.getCart()))
                 .quantity(cartProduct.getQuantity())
@@ -18,17 +18,17 @@ public class CartProductMapper implements Mapper<CartProductDTO, CartProduct> {
     }
 
     @Override
-    public List<CartProductDTO> toDTOs(List<CartProduct> cartProducts) {
+    public List<CartProductDTO> toDTOs(final List<CartProduct> cartProducts) {
         return cartProducts.stream().map(this::toDto).toList();
     }
 
     @Override
-    public List<CartProduct> toEntities(List<CartProductDTO> dTOs) {
+    public List<CartProduct> toEntities(final List<CartProductDTO> dTOs) {
         return dTOs.stream().map(this::toEntity).toList();
     }
 
     @Override
-    public CartProduct toEntity(CartProductDTO cartProductDTO) {
+    public CartProduct toEntity(final CartProductDTO cartProductDTO) {
         CartProductId cartProductId =
                 new CartProductId(cartProductDTO.getCartDTO().getId(), cartProductDTO.getProductDTO().getId());
 

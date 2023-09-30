@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class XcaleTestApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(XcaleTestApplication.class, args);
-	}
+    public static void main(final String[] args) {
+        SpringApplication.run(XcaleTestApplication.class, args);
+    }
 
 }

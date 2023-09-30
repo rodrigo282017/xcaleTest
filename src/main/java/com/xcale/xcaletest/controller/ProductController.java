@@ -23,7 +23,6 @@ import java.util.List;
  * This controller handles CRUD operations for products.
  * It provides endpoints to retrieve all products, get a product by ID,
  * create a new product, update an existing product, and delete a product.
- *
  * Endpoints:
  * - GET /api/v1/products - Retrieve all products
  * - GET /api/v1/products/{id} - Get a product by ID
@@ -47,13 +46,13 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDTO> getProductById(@PathVariable String id) {
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable final String id) {
         log.info("Received request to get product by id.");
         return ResponseEntity.ok(productService.getProductById(id));
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
+    public ResponseEntity<ProductDTO> createProduct(@RequestBody final ProductDTO productDTO) {
         log.info("Received request to create product.");
         ProductDTO createdProduct = productService.createProduct(productDTO);
 
@@ -61,7 +60,8 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> updateProduct(@PathVariable String id, @RequestBody ProductDTO productDTO) {
+    public ResponseEntity<ProductDTO> updateProduct(@PathVariable final String id,
+                                                    @RequestBody final ProductDTO productDTO) {
         log.info("Received request to update product.");
         ProductDTO updatedProduct = productService.updateProduct(id, productDTO);
 
@@ -69,7 +69,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable final String id) {
         log.info("Received request to delete product.");
         productService.deleteProduct(id);
 

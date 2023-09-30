@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+    "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+    "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+    <!--
+        Enter checkstyle suppression rules here. Read more about suppression filters at:
+        https://checkstyle.sourceforge.io/apidocs/com/puppycrawl/tools/checkstyle/filters/SuppressionFilter.html
+        Example:
+        <suppress checks="UnusedImports" files="ServiceAppApplication.java" lines="3,8-17"/>
+    -->
+
+    <!-- Suppressions for test files. -->
+    <suppress checks="MissingJavadocMethod" files="[\\/]test[\\/]" />
+    <suppress checks="JavadocVariable" files="[\\/]test[\\/]" />
+    <suppress checks="MagicNumber" files="[\\/]test[\\/]" />
+    <suppress checks="LineLength" files="[\\/]test[\\/]" />
+    <suppress checks="FinalParameters" files="[\\/]test[\\/]" />
+    <suppress checks="VisibilityModifier" files="[\\/]test[\\/]" />
+    <suppress checks="FinalClass" files="[\\/]test[\\/]" />
+</suppressions>

@@ -10,7 +10,7 @@ import java.util.List;
 @Component
 public class ProductMapper implements Mapper<ProductDTO, Product> {
     @Override
-    public ProductDTO toDto(Product product) {
+    public ProductDTO toDto(final Product product) {
         return ProductDTO.builder()
                 .id(product.getId())
                 .amount(product.getAmount())
@@ -19,18 +19,18 @@ public class ProductMapper implements Mapper<ProductDTO, Product> {
     }
 
     @Override
-    public List<ProductDTO> toDTOs(List<Product> products) {
+    public List<ProductDTO> toDTOs(final List<Product> products) {
         return products.stream().map(this::toDto).toList();
     }
 
     @Override
-    public List<Product> toEntities(List<ProductDTO> dTOs) {
+    public List<Product> toEntities(final List<ProductDTO> dTOs) {
         return dTOs.stream().map(this::toEntity).toList();
     }
 
 
     @Override
-    public Product toEntity(ProductDTO productDTO) {
+    public Product toEntity(final ProductDTO productDTO) {
         return Product.builder()
                 .id(productDTO.getId())
                 .amount(productDTO.getAmount())

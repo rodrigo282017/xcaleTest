@@ -89,8 +89,7 @@ public class ProductServiceImplTest {
                 .amount(BigDecimal.ONE)
                 .build();
 
-        EntityNotFoundException exception = assertThrows
-                (EntityNotFoundException.class, () -> productService.updateProduct(productId.toString(), productDTO));
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> productService.updateProduct(productId.toString(), productDTO));
 
         assertEquals("Product not found", exception.getCode());
         assertEquals("Could not find product.", exception.getMessage());

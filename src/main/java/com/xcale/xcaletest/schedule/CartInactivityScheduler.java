@@ -17,6 +17,8 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class CartInactivityScheduler {
+    private static final long CART_DELETION_SCHEDULED_TIME = 60000;
+    private static final int CART_DELETION_INTERVAL_MINUTES = 10;
     private final ICartService cartService;
 
     /**
@@ -24,9 +26,10 @@ public class CartInactivityScheduler {
      * This task runs at a fixed rate and deletes carts that have been inactive for a specified duration.
      * Inactivity is determined based on the timestamp recorded in the cart.
      */
-    @Scheduled(fixedRate = 600000) // This will be called each 10 minutes... It is not exactly but it is approximate
+    @Scheduled(fixedRate = CART_DELETION_SCHEDULED_TIME)
+    // This will be called each 10 minutes... It is not exactly but it is approximate
     public void deleteInactiveCarts() {
-        Instant time = Instant.now().minus(10, ChronoUnit.MINUTES);
+        Instant time = Instant.now().minus(CART_DELETION_INTERVAL_MINUTES, ChronoUnit.MINUTES);
         List<CartDTO> inactiveCarts = cartService.findInactiveCarts(time);
 
         for (CartDTO cartDTO : inactiveCarts) {
