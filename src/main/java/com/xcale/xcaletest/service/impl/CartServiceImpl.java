@@ -36,7 +36,7 @@ public class CartServiceImpl implements ICartService {
     private final ICartProductService cartProductService;
 
     @Override
-    public CartDTO createCart(List<ProductWithQuantityDTO> productWithQuantityDTOS) {
+    public CartDTO createCart(final List<ProductWithQuantityDTO> productWithQuantityDTOS) {
         validateRequest(productWithQuantityDTOS);
 
         //First we create an empty cart
@@ -67,7 +67,7 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     @Transactional
-    public void deleteCart(String id) {
+    public void deleteCart(final String id) {
         //This method is going to delete the cart repository entity and the associated cartProduct
         cartRepository.deleteById(UUID.fromString(id));
         log.info("Cart deleted successfully for id: {}", id);
@@ -75,12 +75,13 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     @Transactional
-    public CartDTO updateCart(String id, UpdateCartDTO updateCartDTO) {
+    public CartDTO updateCart(final String id, final UpdateCartDTO updateCartDTO) {
         UUID cartId = UUID.fromString(id);
 
         // Find the cart created
         Cart cart = cartRepository
-                .findById(cartId).orElseThrow(() -> new EntityNotFoundException("Cart not found", "Could not find cart.", id));
+                .findById(cartId).orElseThrow(() ->
+                        new EntityNotFoundException("Cart not found", "Could not find cart.", id));
 
         // Iterate in the cart created, if there is a new product save if not update
         for (UpdateCartDTO.ProductAndQuantity productAndQuantity : updateCartDTO.getProductQuantity()) {
@@ -101,7 +102,7 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public CartDTO getCartById(String id) {
+    public CartDTO getCartById(final String id) {
         Cart cart = cartRepository.findById(UUID.fromString(id))
                 .orElseThrow(() -> new EntityNotFoundException("Cart not found", "Could not find cart.", id));
 
@@ -111,7 +112,7 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     @Transactional
-    public List<CartDTO> findInactiveCarts(Instant time) {
+    public List<CartDTO> findInactiveCarts(final Instant time) {
         List<Cart> cartList = cartRepository.findByUpdatedAtBefore(time);
 
         log.info("Retrieving inactive carts successfully for cart list : {}",
@@ -119,9 +120,9 @@ public class CartServiceImpl implements ICartService {
         return new CartMapper().toDTOs(cartList);
     }
 
-    private void validateRequest(List<ProductWithQuantityDTO> productWithQuantityDTOS) {
+    private void validateRequest(final List<ProductWithQuantityDTO> productWithQuantityDTOS) {
         if (productWithQuantityDTOS.isEmpty()) {
-            log.error("Products are needed to create a cart"); //TODO Add trace id to register the requests
+            log.error("Products are needed to create a cart");
             throw new ValidationException(
                     "MissingRequiredParameters",
                     "Products are needed to create a cart",

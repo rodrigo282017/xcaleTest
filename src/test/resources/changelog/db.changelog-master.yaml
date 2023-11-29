@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001_initial_tables
+      author: Rodrigo
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: 001_initial_tables.sql
+            relativeToChangelogFile: true

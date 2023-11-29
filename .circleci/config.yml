@@ -18,6 +18,14 @@ jobs:
           name: Run tests
           command: ./gradlew test
 
+      - run:
+          name: Run Checkstyle Main files
+          command: ./gradlew checkstyleMain
+
+      - run:
+          name: Run Checkstyle Test files
+          command: ./gradlew checkstyleTest
+
 workflows:
   version: 2
   build:

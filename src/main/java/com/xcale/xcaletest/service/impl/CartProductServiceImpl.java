@@ -21,7 +21,7 @@ public class CartProductServiceImpl implements ICartProductService {
     private final CartProductRepository cartProductRepository;
 
     @Override
-    public void createCartProduct(CartDTO cartDTO, ProductDTO productDTO, Integer quantity) {
+    public void createCartProduct(final CartDTO cartDTO, final ProductDTO productDTO, final Integer quantity) {
         CartProductDTO cartProductDTO = CartProductDTO.builder()
                 .cartDTO(cartDTO)
                 .productDTO(productDTO)
@@ -29,6 +29,8 @@ public class CartProductServiceImpl implements ICartProductService {
                 .build();
 
         cartProductRepository.save(new CartProductMapper().toEntity(cartProductDTO));
-        log.info("Saved cart product successfully for product id: {} and cart id: {}", productDTO.getId(), cartDTO.getId());
+        log.info("Saved cart product successfully for product id: {} and cart id: {}",
+                productDTO.getId(),
+                cartDTO.getId());
     }
 }

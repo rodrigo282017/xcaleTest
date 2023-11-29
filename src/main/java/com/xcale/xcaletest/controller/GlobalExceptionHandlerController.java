@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * Controller advice to handle global exceptions and provide consistent error responses.
  * This controller advice intercepts specific exceptions and maps them to appropriate HTTP error responses,
- * enhancing the API's error handling and consistency.
+ * enhancing the APIs error handling and consistency.
  * <p>
  * Exception Handling:
  * - {@link ValidationException}: Handles validation-related errors and returns a Bad Request (400) response.
@@ -22,14 +22,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RequiredArgsConstructor
 public class GlobalExceptionHandlerController {
     @ExceptionHandler(value = ValidationException.class)
-    public ResponseEntity<ErrorResponse> handleValidationError(ValidationException exception) {
+    public ResponseEntity<ErrorResponse> handleValidationError(final ValidationException exception) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST.value())
                 .body(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), exception.getCode(), exception.getMessage()));
     }
 
     @ExceptionHandler(value = EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleEntityError(EntityNotFoundException exception) {
+    public ResponseEntity<ErrorResponse> handleEntityError(final EntityNotFoundException exception) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND.value())
                 .body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), exception.getCode(), exception.getMessage()));

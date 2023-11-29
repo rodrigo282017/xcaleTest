@@ -37,7 +37,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public ProductDTO getProductById(String id) {
+    public ProductDTO getProductById(final String id) {
         Product product = productRepository.findById(UUID.fromString(id))
                 .orElseThrow(() -> new EntityNotFoundException("Product not found", "Could not find product.", id));
         log.info("Get product by id successfully for id: {}", id);
@@ -47,7 +47,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     @Transactional
-    public ProductDTO createProduct(ProductDTO productDTO) {
+    public ProductDTO createProduct(final ProductDTO productDTO) {
         validateRequest(productDTO);
 
         Product product = productRepository.save(new ProductMapper().toEntity(productDTO));
@@ -59,7 +59,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     @Transactional
-    public ProductDTO updateProduct(String id, ProductDTO productDTO) {
+    public ProductDTO updateProduct(final String id, final ProductDTO productDTO) {
         Optional<Product> optionalProduct = productRepository.findById(UUID.fromString(id));
 
         if (optionalProduct.isEmpty()) {
@@ -84,13 +84,13 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     @Transactional
-    public void deleteProduct(String id) {
+    public void deleteProduct(final String id) {
         productRepository.deleteById(UUID.fromString(id));
         log.info("Deleted product successfully for product id: {}", id);
 
     }
 
-    private void validateRequest(ProductDTO productDTO) {
+    private void validateRequest(final ProductDTO productDTO) {
         if (!hasText(productDTO.getDescription()) || productDTO.getAmount() == null) {
             log.info("Missing required parameters for product id: {}", productDTO.getId());
             throw new ValidationException(
